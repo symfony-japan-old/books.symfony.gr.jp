@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>トラブルシューティング | symfony 1.4によるWebアプリケーション開発 サポートサイト</title>
+    <link rel="stylesheet" href="static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="  documentation" href="index.html" /> 
+  </head>
+  <body>
+
+<div id="all">
+      <div id="header_top">
+        <h1 id="logo_top"><a href="index.html">symfony 1.4によるWebアプリケーション開発 サポートサイト</a></h1>
+        <div class="header_info">
+          ご質問は、twitterの<a href="https://twitter.com/#!/search/%23sf14book">#sf14book</a>ハッシュタグ等でお気軽にどうぞ。
+        </div>
+      </div>
+      <!-- end #header -->
+      <div id="navbar">
+        <ul>
+          <li><a href="index.html">サポートWebトップ</a></li>
+          <li><a href="download/index.html">ダウンロード</a></li>
+          <li><a href="links/index.html">リンク集</a></li>
+          <li><a href="update.html">正誤情報</a></li>
+          <li><a href="#">トラブルシューティング</a></li>
+          <li><a href="member.html">メンバー紹介</a></li>
+          <li><a href="http://www.symfony.gr.jp/">日本Symfonyユーザー会</a></li>
+        </ul>
+      </div>
+      <!-- end #navbar -->
+
+  <div id="content">
+    <div id="content_wrapper">
+      <div id="main">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>トラブルシューティング<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>本書を読み進める上で、読者の方から頂いたトラブルとその解決方法についての情報を掲載します。</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#symfony" id="id2">第2章でインストールしたsymfonyアプリケーションのあるコンピュータの外部からアクセスしている場合</a></li>
+<li><a class="reference internal" href="#windowsxamppmercury-32" id="id3">Windows環境でXAMPP付属のMercury/32を使ってメールを送信する</a></li>
+<li><a class="reference internal" href="#windowssf" id="id4">Windows環境でのsfディレクトリのシンボリックリンク</a></li>
+</ul>
+</div>
+<div class="section" id="symfony">
+<h2><a class="toc-backref" href="#id2">第2章でインストールしたsymfonyアプリケーションのあるコンピュータの外部からアクセスしている場合</a><a class="headerlink" href="#symfony" title="Permalink to this headline">¶</a></h2>
+<p>第2章で解説しているインストール手順では、最後にfrontend_dev.phpへアクセスしてsymfonyの初期画面の表示を確認しています。
+この時、インストールしたコンピュータとは別のコンピュータのWebブラウザからアクセスする場合、frontend_dev.php内の以下の箇所をコメントアウトする必要があります。</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// this check prevents access to debug front controllers that are deployed by accident to production servers.</span>
+<span class="c1">// feel free to remove this, extend it or make something more sophisticated.</span>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">in_array</span><span class="p">(</span><span class="o">@</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">],</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;::1&#39;</span><span class="p">)))</span>
+<span class="p">{</span>
+  <span class="k">die</span><span class="p">(</span><span class="s1">&#39;You are not allowed to access this file. Check &#39;</span><span class="o">.</span><span class="nb">basename</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39; for more information.&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>ご指摘いただいたブログ記事</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://online-shortcut.com/blog/?p=1350">ただいまsymfony1.4を勉強中！</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="windowsxamppmercury-32">
+<h2><a class="toc-backref" href="#id3">Windows環境でXAMPP付属のMercury/32を使ってメールを送信する</a><a class="headerlink" href="#windowsxamppmercury-32" title="Permalink to this headline">¶</a></h2>
+<p>Windowsで開発されている方の場合、XAMPPに付属するMercury/32をSMTPサーバーとして動作させることで、実際にメールを送信することができます。この場合、Mercury/32の以下の点をあらかじめ設定しておいてください。</p>
+<blockquote>
+<div><blockquote>
+<div>XAMPP Control PanelよりMercuryのAdminボタンをクリックし、Mercury/32の管理画面を起動してください。</div></blockquote>
+<ul class="simple">
+<li>メニューの [Configuration] にある [Mercury SMTP Server] を選択します。</li>
+<li>[Connection Control] タブで [Do not permit SMTP relaying of non-local mail] のチェックを外し、[OK] をクリックしてください。</li>
+<li>メニューの [Configuration] にある [Mercury SMTP Client] を選択します。</li>
+<li>[Name Servers] の欄に、お使いのプロバイダの DNS サーバーの IP アドレスを入力し、[OK] をクリックしてください。</li>
+<li>XAMPP Control PanelよりMercuryを一旦Stopし、その後Startしてください。</li>
+</ul>
+</div></blockquote>
+<p>また、symfonybandプロジェクトでは、メールの送信にSendmailを利用するようになっていますが、これをSMTPに変更します。
+<tt class="docutils literal"><span class="pre">apps/frontend/config/factories.yml</span></tt> ファイルを開き、mailerの設定を以下のように変更してください。</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">mailer</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">param</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span> <span class="s">&#39;UTF-8&#39;</span>
+    <span class="l-Scalar-Plain">delivery_strategy</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">realtime</span>
+    <span class="l-Scalar-Plain">transport</span><span class="p-Indicator">:</span>
+      <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Swift_SmtpTransport</span>
+      <span class="l-Scalar-Plain">param</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">localhost</span>
+        <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">25</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="windowssf">
+<h2><a class="toc-backref" href="#id4">Windows環境でのsfディレクトリのシンボリックリンク</a><a class="headerlink" href="#windowssf" title="Permalink to this headline">¶</a></h2>
+<p>本書第2章4節「Windows環境でのインストール」においては、symfonyのデフォルトの画像素材等が入ったsfディレクトリをプロジェクトのwebディレクトリ配下に設置する際、コピーするよう記載しております。</p>
+<p>Windows Vista以降では、Windowsでもシンボリックリンクを「mklink」コマンドによって作成できるようになっていますので、このコマンドを使ってシンボリックリンクを作成する方法を説明します。</p>
+<p>74ページの2-4-9の手順（sfディレクトリのコピー）の箇所で、コマンドプロンプトでプロジェジュとのwebディレクトリへ移動します。この際、コマンドプロンプトをあらかじめ「管理者として実行」オプションで起動しておく必要があることに注意してください。
+webディレクトリで、次のコマンドを実行します。</p>
+<div class="highlight-bash"><div class="highlight"><pre>mklink /D sf ..<span class="se">\l</span>ib<span class="se">\v</span>endor<span class="se">\s</span>ymfony<span class="se">\d</span>ata<span class="se">\w</span>eb<span class="se">\s</span>f
+</pre></div>
+</div>
+<p>これで、sfディレクトリがシンボリックリンクとして作成されます。</p>
+<p>また、第4章7節「管理機能の実装」における素材ディレクトリの準備でもシンボリックリンクコマンドを利用できます。175ページにあるlnコマンドを実行している箇所は、Windows Vista以降の環境では、webadminディレクトリから次のコマンドを実行することで、同じようにシンボリックリンクを作成できます。</p>
+<div class="highlight-bash"><div class="highlight"><pre>mklink /D sf ..<span class="se">\.</span>.<span class="se">\l</span>ib<span class="se">\v</span>endor<span class="se">\s</span>ymfony<span class="se">\d</span>ata<span class="se">\w</span>eb<span class="se">\s</span>f
+mklink /D sfDoctrinePlugin ..<span class="se">\.</span>.<span class="se">\l</span>ib<span class="se">\v</span>endor<span class="se">\s</span>ymfony<span class="se">\l</span>ib<span class="se">\p</span>lugins<span class="se">\s</span>fDoctrinePlugin<span class="se">\w</span>eb
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">トラブルシューティング</a><ul>
+<li><a class="reference internal" href="#symfony">第2章でインストールしたsymfonyアプリケーションのあるコンピュータの外部からアクセスしている場合</a></li>
+<li><a class="reference internal" href="#windowsxamppmercury-32">Windows環境でXAMPP付属のMercury/32を使ってメールを送信する</a></li>
+<li><a class="reference internal" href="#windowssf">Windows環境でのsfディレクトリのシンボリックリンク</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/troubleshooting.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+      </div>
+      <!-- end #main -->
+    </div>
+    <!-- end #content_wrapper -->
+  </div>
+  <!-- end #content -->
+
+
+  <div id="footer">
+    <div id="footer_wrapper">
+      <div id="footer_content">
+        <div style=" position: relative;">
+          <div id="footer_left"></div>
+          <div id="footer_right"></div>
+        </div>
+        <div id="f_navbar">
+        <ul>
+          <li><a href="index.html">サポートWebトップ</a></li>
+          <li><a href="download/index.html">ダウンロード</a></li>
+          <li><a href="links/index.html">リンク集</a></li>
+          <li><a href="update.html">正誤情報</a></li>
+          <li><a href="#">トラブルシューティング</a></li>
+          <li><a href="member.html">メンバー紹介</a></li>
+          <li><a href="http://www.symfony.gr.jp/">日本Symfonyユーザー会</a></li>
+        </ul>
+      </div>
+      <!-- end #navbar -->
+        <div>
+          <p id="copy">
+            Copyright &copy; 2011 Symfony Japan. All rights reserved.
+            &nbsp;&nbsp;&nbsp;Bandwidth and hardware provided by <a href="http://www.asial.co.jp/">アシアル株式会社</a>
+            &nbsp;&nbsp;Powered by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+          </p>
+        </div>
+      </div>
+      <!-- end #footer_content -->
+        </div>
+        <!-- end #footer_wrapper -->
+      </div>
+      <!-- end #footer -->
+    </div>
+  </body>
+</html>
